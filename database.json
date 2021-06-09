@@ -1,0 +1,11 @@
+{
+    "default": "dev-local",
+    "dev-local": {
+        "host": "localhost",
+        "username": "root",
+        "password": "",
+        "database": "nickgpub_local",
+        "driver": "mysql",
+        "multipleStatements": true
+    }
+}

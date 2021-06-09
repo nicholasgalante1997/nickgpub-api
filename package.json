@@ -1,0 +1,32 @@
+{
+  "name": "nickgpub-api",
+  "version": "1.0.0",
+  "description": "api head for nickgpub",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "docker-c": "docker-compose -f docker-compose.yml up -d --build",
+    "docker-c:down": "docker-compose down"
+  },
+  "author": "nickg",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "db-migrate": "^0.11.12",
+    "db-migrate-mysql": "^2.1.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "jest": "^27.0.4",
+    "nodemon": "^2.0.7"
+  }
+}
