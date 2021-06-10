@@ -1,10 +1,10 @@
 {
     "default": "dev-local",
     "dev-local": {
-        "host": "localhost",
+        "host": "ngp-mysql",
         "username": "root",
-        "password": "",
-        "database": "nickgpub_local",
+        "password": "haberdashery",
+        "database": "nickgpub-db",
         "driver": "mysql",
         "multipleStatements": true
     }

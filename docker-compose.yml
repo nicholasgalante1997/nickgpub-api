@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+    ngp-mysql:
+        image: mysql:5.7.32
+        restart: on-failure
+        environment:
+            MYSQL_ROOT_PASSWORD: haberdashery
+            MYSQL_DATABASE: nickgpub-db
+        ports:
+            - 3308:3306
+        volumes: 
+            - db-config:/etc/mysql 
+            - db-data:/var/lib/mysql 
+        networks:
+            - nickgpub
+    nickgpub-api:
+        build: 
+            context: .
+            args:
+                NODE_ENV: development
+            dockerfile: ./Dockerfile
+        ports: 
+            - "3000:4040"
+        volumes:
+            - ./:/app:ro
+            - /app/node_modules
+        environment: 
+            - NODE_ENV=development
+            - PORT=4040
+        image: nickgpub-api
+        depends_on: 
+            - ngp-mysql 
+        networks:
+            - nickgpub
+networks:
+    nickgpub:
+volumes: 
+    db-config:
+    db-data:
