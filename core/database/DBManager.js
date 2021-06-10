@@ -11,6 +11,7 @@ class DatabaseManager {
 
     query = async (query, values = null) => {
         const connection = this.connect();
+        console.log('connected as id ' + connection.threadId);
         if (values) {
             const queryResult = await new Promise((resolve, reject) => {
                 connection.query(query, values, (err, results, fields) => {
@@ -33,4 +34,11 @@ class DatabaseManager {
     } 
 }
 
-module.exports = DatabaseManager;
+const db = new DatabaseManager({
+    host: 'ngp-mysql',
+    user: process.env.MYSQL_LOCAL_USER,
+    password: process.env.MYSQL_ROOT_PASSWORD || '',
+    database: process.env.MYSQL_DB,
+  });
+
+module.exports = db;
