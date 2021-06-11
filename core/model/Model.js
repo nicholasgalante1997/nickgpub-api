@@ -7,16 +7,11 @@ class Model {
         this._table = table;
     }
 
-    static identify = async () => {
-        const cols = await db.query(`DESCRIBE ${this.table}`);
-        return cols;
-    }
-
-    static validate = async (tableData, postData) => {
+    static validate = (tableData, postData) => {
       let flag = true;
       const requiredFields = [];
       tableData.forEach(column => {
-          if (column['Null'] === 'NO') {
+          if (column['Null'] === 'NO' && column['Default'] === null) {
               requiredFields.push(column);
           }
       })
@@ -48,18 +43,23 @@ class Model {
     }
 
     create = async (data) => {
-        const tableData = await Model.identify()
-        try {
-            // TODO: test if validation works
-            // TODO: test if inserting this way works
-            if (Model.validate(tableData, data)) {
-                const record = await db.query(`insert into ${this._table} set ?`, data);
-                return record;
-            }
-            throw new Error('Data receieved was invalid or did not match the table columns');
-        } catch (e) {
-            throw new Error(e.message);
-        }
+        // const tableData = await Model.identify()
+        const cols = await db.query(`DESCRIBE ${this._table}`);
+        const valid = Model.validate(cols, data);
+        return valid;
+        // try {
+        //     // TODO: test if validation works
+        //     // TODO: test if inserting this way works
+        //     if (Model.validate(tableData, data)) {
+        //         const record = await db.query(`insert into ${this._table} set ?`, data);
+        //         return record;
+        //     } else {
+        //       throw new Error('Data receieved was invalid or did not match the table columns');
+        //     }
+            
+        // } catch (e) {
+        //     throw new Error(e.message);
+        // }
     }
 }
 

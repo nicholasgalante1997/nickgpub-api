@@ -29,6 +29,12 @@ app.get('/api/collections/:id', async (req, res) => {
   res.json({ record });
 });
 
+app.post('/api/collections', async (req, res) => {
+  const { collection } = req.body;
+  const entry = await Collection.create(collection);
+  res.json(entry);
+});
+
 app.get('/log', async (req, res) => {
   const log = await db.query('DESCRIBE collections');
   res.json({ log });
