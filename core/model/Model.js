@@ -43,23 +43,46 @@ class Model {
     }
 
     create = async (data) => {
-        // const tableData = await Model.identify()
         const cols = await db.query(`DESCRIBE ${this._table}`);
         const valid = Model.validate(cols, data);
-        return valid;
-        // try {
-        //     // TODO: test if validation works
-        //     // TODO: test if inserting this way works
-        //     if (Model.validate(tableData, data)) {
-        //         const record = await db.query(`insert into ${this._table} set ?`, data);
-        //         return record;
-        //     } else {
-        //       throw new Error('Data receieved was invalid or did not match the table columns');
-        //     }
-            
-        // } catch (e) {
-        //     throw new Error(e.message);
-        // }
+        if (!valid) {
+            return { error: 'Post content was incompatible with db table fields'};
+        }
+        try {
+            const response = await db.query(`insert into ${this._table} set ?`, data);
+            if (response['affectedRows'] === 1) {
+                return { status: 200, msg: 'Post Success', id: data['id'] };
+            }
+        } catch (e) {
+            throw new Error(e.message);
+        }
+    }
+
+    update = async (id, data) => {
+        const cols = await db.query(`DESCRIBE ${this._table}`);
+        const valid = Model.validate(cols, data);
+        if (!valid) {
+            return { error: 'Post content was incompatible with db table fields'};
+        }
+        try {
+            const isolate = await db.query(`select * from ${this._table} where id = ?`, [id]);
+            if (!isolate) {
+                return { error: 'No Record Found With That ID'};
+            }
+            const updated = await db.query(`update ${this._table} set ? where id = ?`, [data, id]);
+            return updated;
+        } catch (e) {
+            throw new Error(e.message);
+        }
+    }
+
+    delete = async (id) => {
+      const isolate = await db.query(`select * from ${this._table} where id = ?`, [id]);
+      if (!isolate){
+        return { error: 'No Record Found With That ID'};
+      }
+      const res = await db.query(`delete from ${this._table} where id = ?`, [id]);
+      return res;
     }
 }
 

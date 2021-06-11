@@ -4,9 +4,9 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 
-const Collection = require('./models/collections/Collection');
-
 const db = require('./core/database/DBManager');
+
+const collectionsRouter = require('./routes/collection');
 
 const app = express();
 
@@ -16,27 +16,13 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cors());
 
-app.get('/', (req, res) => res.json({ why: 'of fry' }));
+app.get('/', (req, res) => res.json({ api: 'ITS ALIVE' }));
 
-app.get('/api/collections', async (req, res) => {
-  const collections = await Collection.read();
-  res.json({ collections });
-});
+app.use('/api/collections', collectionsRouter);
 
-app.get('/api/collections/:id', async (req, res) => {
-  const { id } = req.params;
-  const record = await Collection.readById(id);
-  res.json({ record });
-});
-
-app.post('/api/collections', async (req, res) => {
-  const { collection } = req.body;
-  const entry = await Collection.create(collection);
-  res.json(entry);
-});
-
-app.get('/log', async (req, res) => {
-  const log = await db.query('DESCRIBE collections');
+app.get('/log/:table', async (req, res) => {
+  const { table } = req.params;
+  const log = await db.query(`DESCRIBE ${table}`);
   res.json({ log });
 });
 
