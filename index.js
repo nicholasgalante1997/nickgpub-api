@@ -26,4 +26,4 @@ app.get('/log/:table', async (req, res) => {
   res.json({ log });
 });
 
-app.listen(port, () => console.log(`server\'s fucking ready 🤠 yeehaw \n spotify port ${port}`));
+app.listen(port, () => console.log(`server\'s fucking ready 🤠 yeehaw`));
