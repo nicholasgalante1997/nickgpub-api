@@ -19,14 +19,33 @@ exports.readEssayById = async (req, res) => {
   }
 };
 
-exports.readEssaysByCollection = async (req, res) => {
-  const { collectionId } = req.params;
+exports.createEssay = async (req, res) => {
   try {
-    const essays = await Essay.readByCollectionId(collectionId);
-    res.json({ collectionId, essays });
+    const { essay } = req.body;
+    const entry = await Essay.create(essay);
+    res.json(entry);
   } catch (e) {
     res.json({ e });
   }
 };
 
-// exports.create =
+exports.updateEssay = async (req, res) => {
+  try {
+    const { essay } = req.body;
+    const { id } = req.params;
+    const updatedRecord = await Essay.update(id, essay);
+    res.json({ updatedRecord });
+  } catch (e) {
+    res.json({ e });
+  }
+};
+
+exports.deleteEssay = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const removed = await Essay.delete(id);
+    res.json(removed);
+  } catch (e) {
+    res.json({ e });
+  }
+};

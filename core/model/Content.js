@@ -3,11 +3,8 @@ const Model = require('./Model');
 
 class Content extends Model {
 
-    _eslint_class
-
     constructor(table) {
         super(table);
-        
     }
     
     readByCollectionId = async (collectionId) => {

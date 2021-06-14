@@ -7,6 +7,9 @@ const cors = require('cors');
 const db = require('./core/database/DBManager');
 
 const collectionsRouter = require('./routes/collection');
+const essaysRouter = require('./routes/essay');
+const storyRouter = require('./routes/story');
+const poemsRouter = require('./routes/poem');
 
 const app = express();
 
@@ -19,6 +22,9 @@ app.use(cors());
 app.get('/', (req, res) => res.json({ api: 'ITS ALIVE' }));
 
 app.use('/api/collections', collectionsRouter);
+app.use('/api/essays', essaysRouter);
+app.use('/api/stories', storyRouter);
+app.use('/api/poems', poemsRouter);
 
 app.get('/log/:table', async (req, res) => {
   const { table } = req.params;
