@@ -4,7 +4,7 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 
-const db = require('./core/database/DBManager');
+const TableLogger = require('./core/database/Table');
 
 const collectionsRouter = require('./routes/collection');
 const essaysRouter = require('./routes/essay');
@@ -19,17 +19,14 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cors());
 
+// meta info
 app.get('/', (req, res) => res.json({ api: 'ITS ALIVE' }));
+app.get('/log/:table', TableLogger.retrieveTableInfo);
 
+// routes
 app.use('/api/collections', collectionsRouter);
 app.use('/api/essays', essaysRouter);
 app.use('/api/stories', storyRouter);
 app.use('/api/poems', poemsRouter);
-
-app.get('/log/:table', async (req, res) => {
-  const { table } = req.params;
-  const log = await db.query(`DESCRIBE ${table}`);
-  res.json({ log });
-});
 
 app.listen(port, () => console.log(`server\'s fucking ready 🤠 yeehaw`));
