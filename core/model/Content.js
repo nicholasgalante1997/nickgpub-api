@@ -2,10 +2,6 @@ const db = require('../database/DBManager')
 const Model = require('./Model')
 
 class Content extends Model {
-    constructor(table) {
-        super(table)
-    }
-
     readByCollectionId = async (collectionId) => {
         try {
             const records = await db.query(

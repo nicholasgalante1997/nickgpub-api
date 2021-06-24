@@ -1,4 +1,5 @@
 const SecurityQuestions = require('../models/admin/SecurityQuestions')
+const SecurityResponse = require('../models/admin/SecurityResponses')
 
 exports.createSecurityQuestion = async (req, res) => {
     try {
@@ -25,9 +26,19 @@ exports.getSecurityQuestions = async (req, res) => {
 
 exports.deleteSecurityQuestion = async (req, res) => {
     try {
-        const { adminId } = req.params
-        const result = await SecurityQuestions.delete(adminId)
+        const { securityQuestionId } = req.params
+        const result = await SecurityQuestions.delete(securityQuestionId)
         res.json({ result })
+    } catch (e) {
+        res.json({ err: e, msg: e.message })
+    }
+}
+
+exports.createSecurityAnswer = async (req, res) => {
+    try {
+        const { rawSAObject } = req.body
+        const entry = await SecurityResponse.createSA({ rawSAObject })
+        res.json({ entry })
     } catch (e) {
         res.json({ err: e, msg: e.message })
     }
