@@ -43,3 +43,10 @@ exports.createSecurityAnswer = async (req, res) => {
         res.json({ err: e, msg: e.message })
     }
 }
+
+// TODO: need to figure out what the fuck we're doing here for auth before writing more code!!!
+// exports.getSecurityAnswers = async (req, res) => {
+//     try {
+//         const answers 
+//     }
+// }
