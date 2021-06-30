@@ -1,9 +1,12 @@
+const { v4: uuidv4 } = require('uuid')
 const Admin = require('../models/admin/Admin')
 
 exports.createAdmin = async (req, res) => {
     try {
         const { admin } = req.body
-        const entry = await Admin.create(admin)
+        const { username } = admin
+        const id = uuidv4()
+        const entry = await Admin.create({ id, username })
         res.json(entry)
     } catch (e) {
         res.json({ e })

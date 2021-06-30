@@ -13,7 +13,5 @@ router.route('/verify/:adminId').get(SecurityController.getSecurityQuestions)
 router
     .route('/verify/new/securityQuestion')
     .post(SecurityController.createSecurityQuestion)
-router.route('/verify/del/:securityAnswerId')
-    .delete(SecurityController.)
 
 module.exports = router
