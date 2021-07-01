@@ -44,9 +44,29 @@ exports.createSecurityAnswer = async (req, res) => {
     }
 }
 
+exports.compareSecurityAnswer = async (req, res) => {
+    try {
+        const { rawSAObject } = req.body
+        const cleared = await SecurityResponse.compareResponses(rawSAObject)
+        res.json({ cleared })
+    } catch (e) {
+        res.json({ err: e, msg: e.message })
+    }
+}
+
+exports.getSAByQuestionId = async (req, res) => {
+    try {
+        const { questionId } = req.params
+        const answers = await SecurityResponse.getSAByQuestionId(questionId)
+        res.json({ answers })
+    } catch (e) {
+        res.json({ err: e, msg: e.message })
+    }
+}
+
 // TODO: need to figure out what the fuck we're doing here for auth before writing more code!!!
 // exports.getSecurityAnswers = async (req, res) => {
 //     try {
-//         const answers 
+//         const answers
 //     }
 // }

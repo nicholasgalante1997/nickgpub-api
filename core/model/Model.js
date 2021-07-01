@@ -1,5 +1,5 @@
+const { v4: uuidv4 } = require('uuid')
 const db = require('../database/DBManager')
-
 class Model {
     _table
 
@@ -47,7 +47,9 @@ class Model {
 
     create = async (data) => {
         const cols = await db.query(`DESCRIBE ${this._table}`)
-        const valid = Model.validate(cols, data)
+        const id = uuidv4()
+        const dto = { id, ...data }
+        const valid = Model.validate(cols, dto)
         if (!valid) {
             return {
                 error: 'Post content was incompatible with db table fields',
@@ -56,7 +58,7 @@ class Model {
         try {
             const response = await db.query(
                 `insert into ${this._table} set ?`,
-                data
+                dto
             )
             if (response.affectedRows === 1) {
                 return { status: 200, msg: 'Post Success', id: data.id }

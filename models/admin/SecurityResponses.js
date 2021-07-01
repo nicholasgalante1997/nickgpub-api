@@ -6,9 +6,9 @@ const Model = require('../../core/model/Model')
 class SecurityResponse extends Model {
     createSA = async ({ rawSAObject }) => {
         const { answer, questionId } = rawSAObject
-        const hashedAnswer = await bcryptjs.hash(answer, 22)
+        const hashedResponse = await bcryptjs.hash(answer, 3)
         const id = uuidv4()
-        const data = { id, questionId, hashedAnswer }
+        const data = { id, questionId, hashedResponse }
         try {
             const cols = await db.query(`DESCRIBE ${this._table}`)
             const valid = Model.validate(cols, data)
@@ -39,15 +39,18 @@ class SecurityResponse extends Model {
         }
     }
 
-    compareResponses = async ({ mockAnswerObject }) => {
-        const { answer, questionId, id } = mockAnswerObject
+    compareResponses = async (mockAnswerObject) => {
+        const { answer, id } = mockAnswerObject
         try {
-            const realAnswerArr = await super.readById(id)
+            const realAnswerArr = await db.query(
+                `select * from security_answers where id = ?`,
+                [id]
+            )
             if (realAnswerArr.length === 0) {
                 throw new Error('NO RECORD FOUND WITH THIS ID')
             }
-            const { hashedAnswer } = realAnswerArr[0]
-            const isValidAnswer = await bcryptjs.compare(answer, hashedAnswer)
+            const { hashedResponse } = realAnswerArr[0]
+            const isValidAnswer = await bcryptjs.compare(answer, hashedResponse)
             return isValidAnswer
         } catch (e) {
             throw new Error(e.message)
