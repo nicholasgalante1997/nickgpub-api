@@ -1,17 +1,17 @@
-const express = require('express')
-const StoryController = require('../controllers/Story')
+const express = require('express');
+const StoryController = require('../controllers/Story');
 
-const router = express.Router()
-
-router
-    .route('/')
-    .get(StoryController.readStories)
-    .post(StoryController.createStory)
+const router = express.Router();
 
 router
-    .route('/:id')
-    .get(StoryController.readStoryById)
-    .put(StoryController.updateStory)
-    .delete(StoryController.deleteStory)
+  .route('/')
+  .get(StoryController.readStories)
+  .post(StoryController.createStory);
 
-module.exports = router
+router
+  .route('/:id')
+  .get(StoryController.readStoryById)
+  .put(StoryController.updateStory)
+  .delete(StoryController.deleteStory);
+
+module.exports = router;

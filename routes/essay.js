@@ -1,17 +1,17 @@
-const express = require('express')
-const EssayController = require('../controllers/Essay')
+const express = require('express');
+const EssayController = require('../controllers/Essay');
 
-const router = express.Router()
-
-router
-    .route('/')
-    .get(EssayController.readEssays)
-    .post(EssayController.createEssay)
+const router = express.Router();
 
 router
-    .route('/:id')
-    .get(EssayController.readEssayById)
-    .put(EssayController.updateEssay)
-    .delete(EssayController.deleteEssay)
+  .route('/')
+  .get(EssayController.readEssays)
+  .post(EssayController.createEssay);
 
-module.exports = router
+router
+  .route('/:id')
+  .get(EssayController.readEssayById)
+  .put(EssayController.updateEssay)
+  .delete(EssayController.deleteEssay);
+
+module.exports = router;

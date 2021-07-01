@@ -1,5 +1,5 @@
-const Content = require('../../core/model/Content')
+const Content = require('../../core/model/Content');
 
 class Poem extends Content {}
 
-module.exports = new Poem('poems')
+module.exports = new Poem('poems');

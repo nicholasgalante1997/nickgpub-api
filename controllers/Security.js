@@ -1,72 +1,65 @@
-const SecurityQuestions = require('../models/admin/SecurityQuestions')
-const SecurityResponse = require('../models/admin/SecurityResponses')
+const SecurityQuestions = require('../models/admin/SecurityQuestions');
+const SecurityResponse = require('../models/admin/SecurityResponses');
 
 exports.createSecurityQuestion = async (req, res) => {
-    try {
-        const { securityQuestion } = req.body
-        const entry = await SecurityQuestions.create(securityQuestion)
-        res.json({ entry })
-    } catch (e) {
-        res.json({ err: e, msg: e.message })
-    }
-}
+  try {
+    const { securityQuestion } = req.body;
+    const entry = await SecurityQuestions.create(securityQuestion);
+    res.json({ entry });
+  } catch (e) {
+    res.json({ err: e, msg: e.message });
+  }
+};
 
 exports.getSecurityQuestions = async (req, res) => {
-    try {
-        const { adminId } = req.params
-        const { questions } = await SecurityQuestions.readByAdminId(adminId)
-        if (questions.length === 0) {
-            res.json({ err: 'no security questions matching this id' })
-        }
-        res.json({ questions })
-    } catch (e) {
-        res.json({ err: e, msg: e.message })
+  try {
+    const { adminId } = req.params;
+    const { questions } = await SecurityQuestions.readByAdminId(adminId);
+    if (questions.length === 0) {
+      res.json({ err: 'no security questions matching this id' });
     }
-}
+    res.json({ questions });
+  } catch (e) {
+    res.json({ err: e, msg: e.message });
+  }
+};
 
 exports.deleteSecurityQuestion = async (req, res) => {
-    try {
-        const { securityQuestionId } = req.params
-        const result = await SecurityQuestions.delete(securityQuestionId)
-        res.json({ result })
-    } catch (e) {
-        res.json({ err: e, msg: e.message })
-    }
-}
+  try {
+    const { securityQuestionId } = req.params;
+    const result = await SecurityQuestions.delete(securityQuestionId);
+    res.json({ result });
+  } catch (e) {
+    res.json({ err: e, msg: e.message });
+  }
+};
 
 exports.createSecurityAnswer = async (req, res) => {
-    try {
-        const { rawSAObject } = req.body
-        const entry = await SecurityResponse.createSA({ rawSAObject })
-        res.json({ entry })
-    } catch (e) {
-        res.json({ err: e, msg: e.message })
-    }
-}
+  try {
+    const { rawSAObject } = req.body;
+    const entry = await SecurityResponse.createSA({ rawSAObject });
+    res.json({ entry });
+  } catch (e) {
+    res.json({ err: e, msg: e.message });
+  }
+};
 
 exports.compareSecurityAnswer = async (req, res) => {
-    try {
-        const { rawSAObject } = req.body
-        const cleared = await SecurityResponse.compareResponses(rawSAObject)
-        res.json({ cleared })
-    } catch (e) {
-        res.json({ err: e, msg: e.message })
-    }
-}
+  try {
+    const { rawSAObject } = req.body;
+    const cleared = await SecurityResponse.compareResponses(rawSAObject);
+    res.json({ cleared });
+  } catch (e) {
+    res.json({ err: e, msg: e.message });
+  }
+};
 
 exports.getSAByQuestionId = async (req, res) => {
-    try {
-        const { questionId } = req.params
-        const answers = await SecurityResponse.getSAByQuestionId(questionId)
-        res.json({ answers })
-    } catch (e) {
-        res.json({ err: e, msg: e.message })
-    }
-}
-
-// TODO: need to figure out what the fuck we're doing here for auth before writing more code!!!
-// exports.getSecurityAnswers = async (req, res) => {
-//     try {
-//         const answers
-//     }
-// }
+  try {
+    const { questionId } = req.params;
+    const answers = await SecurityResponse.getSAByQuestionId(questionId);
+    res.json({ answers });
+  } catch (e) {
+    res.json({ err: e, msg: e.message });
+  }
+};
