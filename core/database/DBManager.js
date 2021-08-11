@@ -2,12 +2,17 @@ const mysql = require('mysql')
 
 class DatabaseManager {
     _config
+    connect
 
     constructor(config) {
         this._config = config
+        this.connect = () => mysql.createPool(this._config)
+        const connection = this.connect();
+        connection.query('SET GLOBAL connect_timeout=28800');
+        connection.query('SET GLOBAL interactive_timeout=28800');
+        connection.query('SET GLOBAL wait_timeout=28800');
+        connection.end()
     }
-
-    connect = () => mysql.createConnection(this._config)
 
     query = async (query, values = null) => {
         const connection = this.connect()
@@ -24,6 +29,7 @@ class DatabaseManager {
                 })
             })
             connection.end()
+            console.log("INFO - closing connection.");
             return queryResult
         }
 
@@ -38,6 +44,7 @@ class DatabaseManager {
             })
         })
         connection.end()
+        console.log("INFO - closing connection.");
         return queryResult
     }
 }
