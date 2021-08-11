@@ -43,10 +43,10 @@ class DatabaseManager {
 }
 
 const db = new DatabaseManager({
-    host: 'ngp-mysql',
-    user: process.env.MYSQL_LOCAL_USER,
-    password: process.env.MYSQL_ROOT_PASSWORD || '',
-    database: process.env.MYSQL_DB,
+    host: process.env.HRKU_CLEARDB_HOST,
+    user: process.env.HRKU_CLEARDB_USERNAME,
+    password: process.env.HRKU_CLEARDB_PASSWORD,
+    database: process.env.HRKU_CLEARDB_DATABASE,
 })
 
 module.exports = db

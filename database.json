@@ -1,10 +1,18 @@
 {
-    "default": "dev-local",
+    "default": "heroku",
     "dev-local": {
         "host": "ngp-mysql",
         "username": "root",
         "password": "haberdashery",
         "database": "nickgpub-db",
+        "driver": "mysql",
+        "multipleStatements": true
+    },
+    "heroku": {
+        "host": "us-cdbr-east-04.cleardb.com",
+        "username": "b98380bee14bc1",
+        "password": "d0343cf4",
+        "database": "heroku_8462fc67b1817c4",
         "driver": "mysql",
         "multipleStatements": true
     }

@@ -22,15 +22,13 @@ app.use(bodyparser.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.get('/', (req, res) => res.json({ api: 'ITS ALIVE' }));
+// NOTE: development routes;
+app.get('/', (req, res) => res.json({ api: 'firing!' }));
 app.get('/log/:table', TableLogger.retrieveTableInfo);
-
 app.get('/test-cookie', (req, res) => {
   res.cookie('name', 'sample').json({ cookie: 'sent' });
 });
-
 app.get('/test-get-cookie', (req, res) => {
-  console.log(req.cookies);
   res.json(req.cookies);
 });
 
