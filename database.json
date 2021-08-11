@@ -1,5 +1,5 @@
 {
-    "default": "heroku",
+    "defaultEnv": "heroku",
     "dev-local": {
         "host": "ngp-mysql",
         "username": "root",
